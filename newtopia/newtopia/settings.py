@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ntgame'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -78,9 +79,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'newtopia',
-        'USER': 'postgres',
+        'USER': 'newtopiadb',
         'PASSWORD': 'specialphrase42',
-        'HOST': 'localhost',
+        'HOST': '192.168.0.42',
         'PORT': '5432',
     }
 }
