@@ -7,8 +7,14 @@ class Kingdom(models.Model):
     island = models.IntegerField()
     number = models.IntegerField()
 
+    def __str__(self):
+        return self.name
+
 class Province(models.Model):
 
     name = models.CharField("Province Name", max_length=200)
     race = models.CharField("Province Race", max_length=40)
     kingdom = models.ForeignKey(Kingdom, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
