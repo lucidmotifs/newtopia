@@ -14,6 +14,9 @@ class Province(models.Model):
 
     name = models.CharField("Province Name", max_length=200)
     race = models.CharField("Province Race", max_length=40)
+    peasants = models.IntegerField()
+    mages = models.IntegerField()
+    army = models.ForeignKey(Army, on_delete=models.CASCADE)
     kingdom = models.ForeignKey(Kingdom, on_delete=models.CASCADE)
 
     def __str__(self):
