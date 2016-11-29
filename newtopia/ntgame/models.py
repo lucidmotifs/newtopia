@@ -17,52 +17,52 @@ class Kingdom(models.Model):
 
 class Province(models.Model):
 
-    name = models.CharField("Province Name", max_length=200)
-    race = models.CharField("Province Race", max_length=40)
-    ruler = models.CharField("Ruler Name", max_length=60)
+    name = models.CharField("Province Name", max_length=200, default="Unknown")
+    race = models.CharField("Province Race", max_length=40, default="Human")
+    ruler = models.CharField("Ruler Name", max_length=60, default="Nameless")
 
     ''' Citizens that can work buildings and pay taxes. Grows based on total pop
     size and can be sped up via magic. Should grow in random increments (+-10%).
     '''
-    peasants = models.IntegerField()
+    peasants = models.IntegerField(default=0)
 
     ''' Money, represented by gold coins (gc) is earned by taxes and spent on
     solider upkeep and drafting expenses. '''
-    money = models.IntegerField()
+    money = models.IntegerField(default=0)
 
     ''' Total land held, gained in combat or via exploration. '''
-    land = models.IntegerField()
+    land = models.IntegerField(default=0)
 
     ''' Grows based on farms and food science. Eaten hourly by all citizens.
     Peasants will die when there is a shortage, and the province will enter a
     'starving' state. Soldiers are always fed, but the pop loss will be greater
     the greater the deficit. 0 peasants means the soliders will not be paid and
     will desert. '''
-    food = models.IntegerField()
+    food = models.IntegerField(default=0)
 
     ''' Total number of magic wielding citizens. Grows based on colleges and
     decays linearly when over-popped. '''
-    mages = models.IntegerField()
+    mages = models.IntegerField(default=0)
 
     ''' Currency for spells. Grows hourly based on number of towers, but Decays
     over a certain amount, once again based on total number of towers. This is
     determined by ntgame.formulas.rune_decay() '''
-    runes = models.IntegerField()
+    runes = models.IntegerField(default=0)
 
     ''' Numbers of war horses stabled. Grows based on total number of stables
     and shrinks (when over-popped) linearly '''
-    warhorses = models.IntegerField()
+    warhorses = models.IntegerField(default=0)
 
     ''' Number of prisoners captured in battle or stolen via thievery. Will
     decay until it reaches the maximum prisoner population linearly '''
-    prisoners = models.IntegerField()
+    prisoners = models.IntegerField(default=0)
 
     ''' Difference between aid sent and received. Draws taxes based on
     relationship to networth. Decays using ntgame.formulas.tb_decay '''
-    trade_balance = models.IntegerField()
+    trade_balance = models.IntegerField(default=0)
 
-    army = models.ForeignKey(Army, on_delete=models.CASCADE)
-    kingdom = models.ForeignKey(Kingdom, on_delete=models.CASCADE)
+    army = models.ForeignKey(Army, on_delete=models.CASCADE, null=True)
+    kingdom = models.ForeignKey(Kingdom, on_delete=models.CASCADE, null=True)
 
     ''' Effects is a list of positive and negative effects currently held by a
     province. These are different from states that are situation based, NOT
