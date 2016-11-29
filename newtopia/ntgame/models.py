@@ -1,8 +1,8 @@
 from django.db import models
 
 # Custom imports
-from ntgame import race
-from ntgame import formulas
+from .src import race
+from .src import formulas
 
 # Create your models here.
 class Kingdom(models.Model):
@@ -13,6 +13,44 @@ class Kingdom(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Army(models.Model):
+
+    race = models.CharField(max_length=40)
+    soldiers = models.IntegerField()
+    offspec = models.IntegerField()
+    defspec = models.IntegerField()
+    elites = models.IntegerField()
+    thieves = models.IntegerField()
+
+
+    def __init__(self, race="Human"):
+        self.race = race
+
+
+    def get_elite_off_val(self):
+        return ntgame.race.get_elite_offense(self.race)
+
+
+    def get_elite_def_val(self):
+        return ntgame.race.get_elite_defense(self.race)
+
+
+    def off_points(self):
+        return  (self.soliders * 1) + \
+                (self.offspec * 4) + \
+                (self.elites * self.get_elite_off_val())
+
+
+    def def_points(self):
+        return  (self.soliders * 1) + \
+                (self.defspec * 4) + \
+                (self.elites * self.get_elite_def_val())
+
+
+    def __str__(self):
+        return "%d Soldier, %d Off Spec, %d Def Spec, %d Elites, %d Thieves"
 
 
 class Province(models.Model):
@@ -82,41 +120,3 @@ class Province(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Army(models.Model):
-
-    race = models.CharField(max_length=40)
-    soldiers = models.IntegerField()
-    offspec = models.IntegerField()
-    defspec = models.IntegerField()
-    elites = models.IntegerField()
-    thieves = models.IntegerField()
-
-
-    def __init__(self, race="Human"):
-        self.race = race
-
-
-    def get_elite_off_val(self):
-        return ntgame.race.get_elite_offense(self.race)
-
-
-    def get_elite_def_val(self):
-        return ntgame.race.get_elite_defense(self.race)
-
-
-    def off_points(self):
-        return  (self.soliders * 1) + \
-                (self.offspec * 4) + \
-                (self.elites * self.get_elite_off_val())
-
-
-    def def_points(self):
-        return  (self.soliders * 1) + \
-                (self.defspec * 4) + \
-                (self.elites * self.get_elite_def_val())
-
-
-    def __str__(self):
-        return "%d Soldier, %d Off Spec, %d Def Spec, %d Elites, %d Thieves"
