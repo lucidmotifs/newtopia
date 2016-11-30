@@ -143,4 +143,8 @@ class Province(models.Model):
         return 0
 
     def __str__(self):
-        return self.name
+        return "%s of %s (%d:%d)" % \
+            ( self.name,
+              self.kingdom.name,
+              self.kikngdom.island,
+              self.kingdom.number )
