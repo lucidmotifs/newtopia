@@ -17,7 +17,7 @@ class Kingdom(models.Model):
 
 class Race(models.Model):
 
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=40,unique=true)
 
     ''' Offensive spec value. Default is set by over-all game rules '''
     # Could potentially use delta here instead, so new race models could be
@@ -34,6 +34,10 @@ class Race(models.Model):
     ''' Each 'race rule' should be listed here... such as building effectiveness
     and if a BE == 0 then it means this cannot be built (e.g) no war horses on
     one race. '''
+
+
+    def __str__(self):
+        return self.name
 
 
 class Army(models.Model):
@@ -112,7 +116,7 @@ class Province(models.Model):
 
 
     race = models.ForeignKey(Race,
-        one_delete=models.CASCADE,
+        on_delete=models.CASCADE,
         null=False,
         blank=False)
 

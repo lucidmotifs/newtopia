@@ -6,3 +6,4 @@ from .models import Kingdom, Province, Army
 admin.site.register(Kingdom)
 admin.site.register(Province)
 admin.site.register(Army)
+admin.site.register(Race)
