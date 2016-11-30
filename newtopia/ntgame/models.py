@@ -49,10 +49,6 @@ class Army(models.Model):
     thieves = models.IntegerField()
 
 
-    def __init__(self):
-        pass
-
-
     def total_off_points(self, race):
         return  (self.soldiers * 1) + \
                 (self.offspec * race.offense_spec_value) + \
