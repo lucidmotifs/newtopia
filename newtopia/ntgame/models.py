@@ -17,7 +17,7 @@ class Kingdom(models.Model):
 
 class Race(models.Model):
 
-    name = models.CharField(max_length=40,unique=true)
+    name = models.CharField(max_length=40,unique=True)
 
     ''' Offensive spec value. Default is set by over-all game rules '''
     # Could potentially use delta here instead, so new race models could be
