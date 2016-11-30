@@ -1,8 +1,8 @@
 from django.db import models
 
 # Custom imports
-from .src import race
-from .src import formulas
+from .src import nt_rules
+from .src import nt_formulas
 
 # Create your models here.
 class Kingdom(models.Model):
@@ -15,9 +15,29 @@ class Kingdom(models.Model):
         return self.name
 
 
+class Race(models.Model):
+
+    name = models.CharField(max_length=40)
+
+    ''' Offensive spec value. Default is set by over-all game rules '''
+    # Could potentially use delta here instead, so new race models could be
+    # built from rules instead of hardcoded value changes.
+    offense_spec_value = models.IntegerField(default=nt_rules.off_spec_base())
+
+    ''' Defensive spec value. Default is set by over-all game rules '''
+    defense_spec_value = models.IntegerField(default=nt_rules.def_spec_base())
+
+    ''' Elite values always vary from race to race '''
+    elite_offense = models.IntegerField(default=0)
+    elite_defense = models.IntegerField(default=0)
+
+    ''' Each 'race rule' should be listed here... such as building effectiveness
+    and if a BE == 0 then it means this cannot be built (e.g) no war horses on
+    one race. '''
+
+
 class Army(models.Model):
 
-    race = models.CharField(max_length=40)
     soldiers = models.IntegerField()
     offspec = models.IntegerField()
     defspec = models.IntegerField()
@@ -25,38 +45,29 @@ class Army(models.Model):
     thieves = models.IntegerField()
 
 
-    def __init__(self, race="Human"):
-        self.race = race
+    def __init__(self):
+        pass
 
 
-    def get_elite_off_val(self):
-        return ntgame.race.get_elite_offense(self.race)
+    def total_off_points(self, race):
+        return  (self.soldiers * 1) + \
+                (self.offspec * race.offense_spec_value) + \
+                (self.elites * race.elite_offense)
 
 
-    def get_elite_def_val(self):
-        return ntgame.race.get_elite_defense(self.race)
-
-
-    def off_points(self):
-        return  (self.soliders * 1) + \
-                (self.offspec * 4) + \
-                (self.elites * self.get_elite_off_val())
-
-
-    def def_points(self):
-        return  (self.soliders * 1) + \
-                (self.defspec * 4) + \
-                (self.elites * self.get_elite_def_val())
+    def total_def_points(self, race):
+        return  (self.soldiers * 1) + \
+                (self.defspec * race.defense_spec_value) + \
+                (self.elites * race.elite_defense)
 
 
     def __str__(self):
-        return "%d Soldier, %d Off Spec, %d Def Spec, %d Elites, %d Thieves"
+        return "Army: %d" % self.id
 
 
 class Province(models.Model):
 
     name = models.CharField("Province Name", max_length=200, default="Unknown")
-    race = models.CharField("Province Race", max_length=40, default="Human")
     ruler = models.CharField("Ruler Name", max_length=60, default="Nameless")
 
     ''' Citizens that can work buildings and pay taxes. Grows based on total pop
@@ -98,6 +109,12 @@ class Province(models.Model):
     ''' Difference between aid sent and received. Draws taxes based on
     relationship to networth. Decays using ntgame.formulas.tb_decay '''
     trade_balance = models.IntegerField(default=0)
+
+
+    race = models.ForeignKey(Race,
+        one_delete=models.CASCADE,
+        null=False,
+        blank=False)
 
     army = models.ForeignKey(Army,
         on_delete=models.CASCADE,
