@@ -99,8 +99,15 @@ class Province(models.Model):
     relationship to networth. Decays using ntgame.formulas.tb_decay '''
     trade_balance = models.IntegerField(default=0)
 
-    army = models.ForeignKey(Army, on_delete=models.CASCADE, null=True)
-    kingdom = models.ForeignKey(Kingdom, on_delete=models.CASCADE, null=True)
+    army = models.ForeignKey(Army,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True)
+
+    kingdom = models.ForeignKey(Kingdom,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True)
 
     ''' Effects is a list of positive and negative effects currently held by a
     province. These are different from states that are situation based, NOT
