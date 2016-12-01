@@ -14,10 +14,6 @@ class Rule(models.Model):
     def __str__(self):
         return self.tag
 
-    #class Meta:
-        #app_label = "ntmeta"
-        #db_table = "ntgame_rule"
-
 
 class NetworthValue(models.Model):
 
