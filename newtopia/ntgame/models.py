@@ -5,17 +5,6 @@ from .src import nt_rules
 from .src import nt_formulas
 
 # Create your models here.
-''' This is a meta object - potentially move to ntmeta or ntcore (depending on)
-scope of future app. '''
-class Rule(models.Model):
-
-    tag = models.CharField(max_length=40)
-    value = models.IntegerField(default=0)
-    description = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.tag
-
 
 class Kingdom(models.Model):
 
