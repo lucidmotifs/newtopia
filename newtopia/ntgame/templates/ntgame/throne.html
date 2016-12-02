@@ -15,11 +15,11 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <!-- Add bootstrap css files -->
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="{% static 'ntgame/css/main.css' %}">
+        <link rel="stylesheet" href="{% static 'ntgame/css/normalize.css' %}">
 
         <!-- JS library for compatibility -->
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="{% static 'ntgame/js/vendor/modernizr-2.6.2.min.js' %}"></script>
 
         <!-- Custom styles; targetted at this specific page -->
     </head>
@@ -64,21 +64,11 @@
             <script>
                 document.write(new Date().getFullYear());
             </script>
-            . | <a href="http://validator.w3.org/check?uri=referer">
-                    <img style="border:0;height:31px"
-                         src="http://www.w3.org/html/logo/downloads/HTML5_Logo_32.png"
-                         alt="HTML Validator" />
-                </a> |
-                <a href="http://jigsaw.w3.org/css-validator/check/referer">
-                    <img style="border:0; height:31px"
-                         src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
-                         alt="CSS Validator"/>
-                </a>
         </footer>
 
         <!-- I should really update the version of this @TODO -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>');</script>
-        <script src="js/main.js"></script>
+        <script src="{% static 'ntgame/js/main.js' %}"></script>
     </body>
 </html>
