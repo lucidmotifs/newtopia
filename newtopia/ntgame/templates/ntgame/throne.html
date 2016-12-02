@@ -36,27 +36,33 @@
         </header>
 
         <main>
-           <h4>Province Details</h4>
-           <table id="province_details">
-               <tr>
-                   <th>Province Name:</th>
-                   <td>{{ province.name }}</td>
-                   <th>Province Ruler:</th>
-                   <td>{{ province.ruler }}</td>
-               </tr>
-               <tr>
-                   <th>Peasants:</th>
-                   <td>{{ province.peasants }}</td>
-                   <th>Food:</th>
-                   <td>{{ province.food }}</td>
-               </tr>
-               <tr>
-                   <th>Mages:</th>
-                   <td>{{ province.mages }}</td>
-                   <th>Runes:</th>
-                   <td>{{ province.runes }}</td>
-               </tr>
-           </table>
+
+          <div class="centre-viewport">
+
+            <h4>Province Details</h4>
+
+            <table id="province_details">
+              <tr>
+                <th>Province Name:</th>
+                <td>{{ province.name }}</td>
+                <th>Province Ruler:</th>
+                <td>{{ province.ruler }}</td>
+              </tr>
+              <tr>
+                <th>Peasants:</th>
+                <td>{{ province.peasants }}</td>
+                <th>Food:</th>
+                <td>{{ province.food }}</td>
+              </tr>
+              <tr>
+                <th>Mages:</th>
+                <td>{{ province.mages }}</td>
+                <th>Runes:</th>
+                <td>{{ province.runes }}</td>
+              </tr>
+            </table>
+          </div>
+
         </main>
 
         <footer>
