@@ -1,0 +1,11 @@
+{% if province.name %}
+    <ul>
+        <li>{{ province.name }}</li>
+        <li>{{ province.ruler }}</li>
+        <li>{{ province.peasants }}</li>
+        <li>{{ province.money }}</li>
+        <li>{{ province.land }}</li>
+    </ul>
+{% else %}
+    <p>No province found.</p>
+{% endif %}
