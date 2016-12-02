@@ -1,11 +1,87 @@
-{% if province.name %}
-    <ul>
-        <li>{{ province.name }}</li>
-        <li>{{ province.ruler }}</li>
-        <li>{{ province.peasants }}</li>
-        <li>{{ province.money }}</li>
-        <li>{{ province.land }}</li>
-    </ul>
-{% else %}
-    <p>No province found.</p>
-{% endif %}
+{% load static %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Throne Room (in development)</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <!-- Add bootstrap css files -->
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <!-- JS library for compatibility -->
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+
+        <!-- Custom styles; targetted at this specific page -->
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <header>
+            <div class="wrapper">
+               Header...
+            </div>
+        </header>
+
+        <main>
+             <details>
+                 <summary>
+                     Province Details<br>
+                 </summary>
+                 <table id="province_details">
+                     <tr>
+                         <td>Province Name:</td>
+                         <td>{{ province.name }}</td>
+                         <td>Province Ruler:</td>
+                         <td>{{ province.ruler }}</td>
+                     </tr>
+                     <tr>
+                         <th>Peasants:</th>
+                         <td>{{ province.peasants }}</td>
+                         <td>Food:</td>
+                         <td>{{ province.food }}</td>
+                     </tr>
+                     <tr>
+                         <th>Mages:</th>
+                         <td>{{ province.mages }}</td>
+                         <td>Runes:</td>
+                         <td>{{ province.runes }}</td>
+                     </tr>
+                 </table>
+             </details>
+        </main>
+
+        <footer>
+            &copy; Paul Cooper
+            <script>
+                document.write(new Date().getFullYear());
+            </script>
+            . | <a href="http://validator.w3.org/check?uri=referer">
+                    <img style="border:0;height:31px"
+                         src="http://www.w3.org/html/logo/downloads/HTML5_Logo_32.png"
+                         alt="HTML Validator" />
+                </a> |
+                <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                    <img style="border:0; height:31px"
+                         src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+                         alt="CSS Validator"/>
+                </a>
+        </footer>
+
+        <!-- I should really update the version of this @TODO -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>');</script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
