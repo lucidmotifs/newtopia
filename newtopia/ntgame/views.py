@@ -13,4 +13,8 @@ def index(request):
 
 def throne(request, province_id):
     province = Province.objects.get(pk=province_id)
-    return HttpResponse("You're on the throne page for %s" % province.name)
+    template = loader.get_template('ntgame/throne.html')
+    context = {
+        'province': province,
+    }
+    return HttpResponse(template.render(context, request))
