@@ -25,7 +25,8 @@
     </head>
     <body>
         <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser.
+            Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
         <header>
@@ -35,31 +36,27 @@
         </header>
 
         <main>
-             <details>
-                 <summary>
-                     Province Details<br>
-                 </summary>
-                 <table id="province_details">
-                     <tr>
-                         <td>Province Name:</td>
-                         <td>{{ province.name }}</td>
-                         <td>Province Ruler:</td>
-                         <td>{{ province.ruler }}</td>
-                     </tr>
-                     <tr>
-                         <th>Peasants:</th>
-                         <td>{{ province.peasants }}</td>
-                         <td>Food:</td>
-                         <td>{{ province.food }}</td>
-                     </tr>
-                     <tr>
-                         <th>Mages:</th>
-                         <td>{{ province.mages }}</td>
-                         <td>Runes:</td>
-                         <td>{{ province.runes }}</td>
-                     </tr>
-                 </table>
-             </details>
+           <h4>Province Details</h4>
+           <table id="province_details">
+               <tr>
+                   <th>Province Name:</th>
+                   <td>{{ province.name }}</td>
+                   <th>Province Ruler:</th>
+                   <td>{{ province.ruler }}</td>
+               </tr>
+               <tr>
+                   <th>Peasants:</th>
+                   <td>{{ province.peasants }}</td>
+                   <th>Food:</th>
+                   <td>{{ province.food }}</td>
+               </tr>
+               <tr>
+                   <th>Mages:</th>
+                   <td>{{ province.mages }}</td>
+                   <th>Runes:</th>
+                   <td>{{ province.runes }}</td>
+               </tr>
+           </table>
         </main>
 
         <footer>
