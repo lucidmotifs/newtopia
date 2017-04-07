@@ -15,7 +15,7 @@ button,
 input,
 select,
 textarea {
-    color: #222;
+    color: #FFF;
 }
 
 html {
@@ -137,12 +137,24 @@ main p {
 }
 
 .centre-viewport {
-  width: 1024px;
+  width: 60%;
   margin: 0px auto;
 }
 
 #province_details {
   width: 100%;
+}
+
+#province_details thead {
+  background-color: grey;
+}
+
+#province_details tr:nth-child(even) {
+  background-color: #131313;
+}
+
+#province_details tr:nth-child(odd) {
+  background-color: #000;
 }
 
 #province_details th {

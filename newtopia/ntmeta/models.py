@@ -1,7 +1,5 @@
 from django.db import models
 
-from ntgame.models import Race, Province
-
 # Create your models here.
 ''' This is a meta object - potentially move to ntmeta or ntcore (depending on)
 scope of future app. '''
@@ -18,7 +16,7 @@ class Rule(models.Model):
 class NetworthValue(models.Model):
 
     prop = models.CharField(max_length=40)
-    value = models.IntegerField(default=0)
+    value = models.FloatField(default=0)
 
     def __str__(self):
         return self.prop

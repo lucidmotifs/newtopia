@@ -1,8 +1,14 @@
+# system modules
+import inspect
+
+# django modules
 from django.db import models
+from ntmeta.models import NetworthValue
 
 # Custom imports
 from .src import nt_rules
 from .src import nt_formulas
+from .src.nt_exceptions import InvalidMapException
 
 # Create your models here.
 
@@ -19,6 +25,15 @@ class Kingdom(models.Model):
 class Race(models.Model):
 
     name = models.CharField(max_length=40,unique=True)
+
+    ''' Offensive spec name. '''
+    offense_spec_name = models.CharField(max_length=40,default="Off. Spec")
+
+    ''' Defensive spec name. '''
+    defensive_spec_name = models.CharField(max_length=40,default="Def. Spec")
+
+    ''' Elite name '''
+    elite_name = models.CharField(max_length=40,default="Elite")
 
     ''' Offensive spec value. Default is set by over-all game rules '''
     # Could potentially use delta here instead, so new race models could be
@@ -41,13 +56,13 @@ class Race(models.Model):
         return self.name
 
 
-class Army(models.Model):
+class Military(models.Model):
 
-    soldiers = models.IntegerField()
-    offspec = models.IntegerField()
-    defspec = models.IntegerField()
-    elites = models.IntegerField()
-    thieves = models.IntegerField()
+    soldiers = models.IntegerField(default=0)
+    offspec = models.IntegerField(default=0)
+    defspec = models.IntegerField(default=0)
+    elites = models.IntegerField(default=0)
+    thieves = models.IntegerField(default=0)
 
 
     def total_off_points(self, race):
@@ -63,32 +78,35 @@ class Army(models.Model):
 
 
     def __str__(self):
-        return "Army: %d" % self.id
+        if hasattr(self,"province"):
+            return "Military of %s" % self.province.name
+        else:
+            return "Unassigned Military"
 
 
 class Province(models.Model):
 
-    name = models.CharField("Province Name", max_length=200, default="Unknown")
-    ruler = models.CharField("Ruler Name", max_length=60, default="Nameless")
+    name = models.CharField("Province Name", max_length=200, null=False)
+    ruler = models.CharField("Ruler Name", max_length=60, null=False)
 
     ''' Citizens that can work buildings and pay taxes. Grows based on total pop
     size and can be sped up via magic. Should grow in random increments (+-10%).
     '''
-    peasants = models.IntegerField(default=0)
+    peasants = models.IntegerField(default=1000)
 
     ''' Money, represented by gold coins (gc) is earned by taxes and spent on
     solider upkeep and drafting expenses. '''
-    money = models.IntegerField(default=0)
+    money = models.IntegerField(default=10000)
 
     ''' Total land held, gained in combat or via exploration. '''
-    land = models.IntegerField(default=0)
+    land = models.IntegerField(default=500)
 
     ''' Grows based on farms and food science. Eaten hourly by all citizens.
     Peasants will die when there is a shortage, and the province will enter a
     'starving' state. Soldiers are always fed, but the pop loss will be greater
     the greater the deficit. 0 peasants means the soliders will not be paid and
     will desert. '''
-    food = models.IntegerField(default=0)
+    food = models.IntegerField(default=8000)
 
     ''' Total number of magic wielding citizens. Grows based on colleges and
     decays linearly when over-popped. '''
@@ -112,20 +130,57 @@ class Province(models.Model):
     trade_balance = models.IntegerField(default=0)
 
 
-    race = models.ForeignKey(Race,
+    race = models.ForeignKey(
+        Race,
         on_delete=models.CASCADE,
         null=False,
         blank=False)
 
-    army = models.ForeignKey(Army,
+    military = models.OneToOneField(
+        Military,
         on_delete=models.CASCADE,
-        null=True,
-        blank=True)
+        primary_key=False)
 
     kingdom = models.ForeignKey(Kingdom,
         on_delete=models.CASCADE,
         null=True,
         blank=True)
+
+
+    ''' The networth mapping dictionary '''
+    MAP = {}
+
+
+    ''' Return the value of a property '''
+    def get(self, key):
+        k = key.lower()
+
+        if hasattr(self,k):
+            print("we have %s" % k)
+            return getattr(self,k)
+        else:
+            print("we don't have %s" % k)
+            raise InvalidMapException(key)
+
+
+    ''' Land un-built '''
+    @property
+    def vacant_land(self):
+        return self.land
+
+
+    ''' Land built '''
+    @property
+    def built_land(self):
+        return 0
+
+
+    ''' Total number of science points acquired via any means '''
+    @property
+    def total_science_points(self):
+        # self.science.total()
+        return 0
+
 
     ''' Effects is a list of positive and negative effects currently held by a
     province. These are different from states that are situation based, NOT
@@ -134,14 +189,50 @@ class Province(models.Model):
 
     # calculated based on number of peasants vs jobs available
     # 100 jobs available and 80 peasants is NOT 80% (need better formula)
+    @property
     def building_efficiency(self):
         return 100
 
+
     ''' Networth is calculated by adding up every piece of a province and
     multiplying that piece by a set value. For example, each acre of land is
-    worth 4gc so a province with 100 acres and nothing else is worth 400gc. '''
+    worth 4gc so a province with 100 acres and nothing else is worth 400gc.
+
+    Requires a valid property map.'''
+    def calc_networth(self, nwmap):
+        nw = 0
+
+        try:
+            for key, value in nwmap.items():
+                toadd = self.get(key) * value
+
+                # debug
+                print("Adding %d to networth" % (toadd))
+
+                nw += int(toadd)
+        except InvalidMapException:
+            nw = -1
+
+        return nw
+
+
+    ''' This property will set a property called nwpa (Networth Per Acre)
+    which will otherwise be 0. This avoids calculating networth twice.
+    This kind of makes because there's no point having a nwpa property
+    without networth - and networth should always be dynamic because it
+    should be the thing you notice if your province has been hit or opped. '''
+    @property
     def networth(self):
-        return 0
+
+        self.MAP = \
+        dict((q.prop, q.value) for q in NetworthValue.objects.all())
+
+        networth = self.calc_networth(self.MAP)
+
+        self.nwpa = float(networth / self.land)
+
+        return networth
+
 
     def __str__(self):
         return "%s of %s (%d:%d)" % \
