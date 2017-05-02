@@ -137,7 +137,7 @@ main p {
 }
 
 .centre-viewport {
-  width: 1024px;
+  width: 60%;
   margin: 0px auto;
 }
 
@@ -150,7 +150,7 @@ main p {
 }
 
 #province_details tr:nth-child(even) {
-  background-color: #121212;
+  background-color: #131313;
 }
 
 #province_details tr:nth-child(odd) {

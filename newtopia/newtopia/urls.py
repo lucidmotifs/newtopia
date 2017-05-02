@@ -22,4 +22,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^game/', include('ntgame.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

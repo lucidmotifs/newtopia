@@ -60,6 +60,7 @@ DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 # Application definition
 
 INSTALLED_APPS = [
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -67,6 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'jet.dashboard',
     'storages',
     'ntgame',
     'ntmeta'
