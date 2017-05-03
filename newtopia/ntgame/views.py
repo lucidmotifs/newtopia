@@ -9,25 +9,21 @@ from django.template import loader
 # Auhorization stuff
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
-class LoggedInMixin(object):
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(LoggedInMixin, self).dispatch(*args, **kwargs)
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def index(request):
     return HttpResponse("Hello, world. You're at the game index.")
 
 
+@login_required()
 def throne(request):
     class Game:
         day = 1
         month = "Jan"
         year = 1
 
-    province = Province.objects.get(pk=user.id)
+    province = Province.objects.get(pk=request.user.id)
     game = Game()
     template = loader.get_template('ntgame/throne.html')
     context = {

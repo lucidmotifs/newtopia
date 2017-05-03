@@ -4,6 +4,7 @@ import inspect
 # django modules
 from django.db import models
 from ntmeta.models import NetworthValue
+from django.contrib.auth.models import User
 
 # Custom imports
 from .src import nt_rules
@@ -139,19 +140,22 @@ class Province(models.Model):
     trade_balance = models.IntegerField(default=0)
 
 
-    race = models.ForeignKey(
-        Race,
+    race = models.ForeignKey(Race,
         on_delete=models.CASCADE,
         null=False,
         blank=False)
 
-    military = models.OneToOneField(
-        Military,
+    military = models.OneToOneField(Military,
         on_delete=models.CASCADE,
         primary_key=False)
 
     kingdom = models.ForeignKey(Kingdom,
         on_delete=models.CASCADE,
+        null=True,
+        blank=True)
+
+    owner = models.ForeignKey(User,
+        on_delete=models.SET_NULL,
         null=True,
         blank=True)
 
