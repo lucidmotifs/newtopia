@@ -60,15 +60,15 @@ DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 # Application definition
 
 INSTALLED_APPS = [
-    'jet',
-    'django.contrib.admin',
     'django.contrib.auth',
+    'jet',
+    'jet.dashboard',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'jet.dashboard',
     'storages',
     'ntgame',
     'ntmeta'
@@ -90,7 +90,7 @@ ROOT_URLCONF = 'newtopia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['./templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -150,8 +150,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_URL = 'django.contrib.auth.views.login'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = '/user/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/

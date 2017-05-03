@@ -21,14 +21,13 @@ def index(request):
     return HttpResponse("Hello, world. You're at the game index.")
 
 
-def throne(request, province_id):
+def throne(request):
     class Game:
         day = 1
         month = "Jan"
         year = 1
 
-
-    province = Province.objects.get(pk=province_id)
+    province = Province.objects.get(pk=user.id)
     game = Game()
     template = loader.get_template('ntgame/throne.html')
     context = {
