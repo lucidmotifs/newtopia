@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^game/', include('ntgame.urls')),
+    url(r'^login/$', 'django.contrib.auth.views.login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout'),
     url(r'^admin/', admin.site.urls),
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
