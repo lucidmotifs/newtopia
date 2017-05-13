@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Province
+from .models.province import Province
 
 # Create your views here.
 from django.http import HttpResponse

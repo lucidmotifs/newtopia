@@ -7,91 +7,14 @@ from ntmeta.models import NetworthValue
 from django.contrib.auth.models import User
 
 # Custom imports
-from .src import nt_rules
-from .src import nt_formulas
-from .src.nt_exceptions import InvalidMapException
+from ntgame.src import nt_rules
+from ntgame.src import nt_formulas
+from ntgame.src.nt_exceptions import InvalidMapException
 
-# Create your models here.
-
-class Kingdom(models.Model):
-
-    name = models.CharField(max_length=200)
-    island = models.IntegerField()
-    number = models.IntegerField()
-
-    def __str__(self):
-        return self.name
-
-
-class Race(models.Model):
-
-    name = models.CharField(max_length=40,unique=True)
-
-    ''' Offensive spec name. '''
-    offense_spec_name = models.CharField(max_length=40,default="Off. Spec")
-
-    ''' Defensive spec name. '''
-    defensive_spec_name = models.CharField(max_length=40,default="Def. Spec")
-
-    ''' Elite name '''
-    elite_name = models.CharField(max_length=40,default="Elite")
-
-    ''' Offensive spec value. Default is set by over-all game rules '''
-    # Could potentially use delta here instead, so new race models could be
-    # built from rules instead of hardcoded value changes.
-    offense_spec_value = models.IntegerField(default=nt_rules.off_spec_base())
-
-    ''' Defensive spec value. Default is set by over-all game rules '''
-    defense_spec_value = models.IntegerField(default=nt_rules.def_spec_base())
-
-    ''' Elite values always vary from race to race '''
-    elite_offense = models.IntegerField(default=0)
-    elite_defense = models.IntegerField(default=0)
-
-    ''' Each 'race rule' should be listed here... such as building effectiveness
-    and if a BE == 0 then it means this cannot be built (e.g) no war horses on
-    one race. '''
-
-
-    def __str__(self):
-        return self.name
-
-
-class Military(models.Model):
-
-    soldiers = models.IntegerField(default=0)
-    offspec = models.IntegerField(default=0)
-    defspec = models.IntegerField(default=0)
-    elites = models.IntegerField(default=0)
-    thieves = models.IntegerField(default=0)
-
-    @property
-
-
-    def total_off_points(self, race):
-        # base offense
-        raw_offense = (self.soldiers * 1) + \
-            (self.offspec * self.province.race.offense_spec_value) + \
-            (self.elites * self.province.race.elite_offense)
-
-
-        return  (self.soldiers * 1) + \
-                (self.offspec * self.province.race.offense_spec_value) + \
-                (self.elites * self.province.race.elite_offense) + \
-                (self.province.war_horses )
-
-
-    def total_def_points(self, race):
-        return  (self.soldiers * 1) + \
-                (self.defspec * race.defense_spec_value) + \
-                (self.elites * race.elite_defense)
-
-
-    def __str__(self):
-        if hasattr(self,"province"):
-            return "Military of %s" % self.province.name
-        else:
-            return "Unassigned Military"
+# App imports
+from .kingdom import Kingdom
+from .military import Military
+from .race import Race
 
 
 class Province(models.Model):
@@ -228,28 +151,27 @@ class Province(models.Model):
 
         return nw
 
+        ''' This property will set a property called nwpa (Networth Per Acre)
+        which will otherwise be 0. This avoids calculating networth twice.
+        This kind of makes because there's no point having a nwpa property
+        without networth - and networth should always be dynamic because it
+        should be the thing you notice if your province has been hit or opped. '''
+        @property
+        def networth(self):
 
-    ''' This property will set a property called nwpa (Networth Per Acre)
-    which will otherwise be 0. This avoids calculating networth twice.
-    This kind of makes because there's no point having a nwpa property
-    without networth - and networth should always be dynamic because it
-    should be the thing you notice if your province has been hit or opped. '''
-    @property
-    def networth(self):
+            self.MAP = \
+            dict((q.prop, q.value) for q in NetworthValue.objects.all())
 
-        self.MAP = \
-        dict((q.prop, q.value) for q in NetworthValue.objects.all())
+            networth = self.calc_networth(self.MAP)
 
-        networth = self.calc_networth(self.MAP)
+            self.nwpa = float(networth / self.land)
 
-        self.nwpa = float(networth / self.land)
-
-        return networth
+            return networth
 
 
-    def __str__(self):
-        return "%s of %s (%d:%d)" % \
-            ( self.name,
-              self.kingdom.name,
-              self.kingdom.island,
-              self.kingdom.number )
+        def __str__(self):
+            return "%s of %s (%d:%d)" % \
+                ( self.name,
+                  self.kingdom.name,
+                  self.kingdom.island,
+                  self.kingdom.number )
