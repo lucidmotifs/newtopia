@@ -6,7 +6,7 @@ scope of future app. '''
 class Rule(models.Model):
 
     tag = models.CharField(max_length=40)
-    value = models.IntegerField(default=0)
+    value = models.FloatField(default=0)
     description = models.CharField(max_length=200)
 
     def __str__(self):

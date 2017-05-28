@@ -14,8 +14,6 @@ class Military(models.Model):
     thieves = models.IntegerField(default=0)
 
     @property
-
-
     def total_off_points(self, race):
         # base offense
         raw_offense = (self.soldiers * 1) + \
@@ -27,8 +25,9 @@ class Military(models.Model):
                 (self.offspec * self.province.race.offense_spec_value) + \
                 (self.elites * self.province.race.elite_offense) + \
                 (self.province.war_horses )
+                
 
-
+    @property
     def total_def_points(self, race):
         return  (self.soldiers * 1) + \
                 (self.defspec * race.defense_spec_value) + \

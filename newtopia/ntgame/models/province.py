@@ -72,15 +72,19 @@ class Province(models.Model):
         on_delete=models.CASCADE,
         primary_key=False)
 
+    infrastructure = models.OneToOneField(Infrastructure,
+        on_delete=models.CASCADE,
+        primary_key=False)
+
     kingdom = models.ForeignKey(Kingdom,
         on_delete=models.CASCADE,
-        null=True,
-        blank=True)
+        null=False,
+        blank=False)
 
     owner = models.ForeignKey(User,
         on_delete=models.SET_NULL,
-        null=True,
-        blank=True)
+        null=False,
+        blank=False)
 
 
     ''' The networth mapping dictionary '''
