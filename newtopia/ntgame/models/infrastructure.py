@@ -3,6 +3,7 @@ from django.db import models
 
 # ntgame models
 from .effect import Effect
+from .province import Province
 
 
 class Building(models.Model):
@@ -28,6 +29,11 @@ class Infrastructure(models.Model):
     explored = models.IntegerField(default=0)
 
     built = models.IntegerField(default=0)
+
+    province = models.OneToOneField(Province,
+        null=True,
+        primary_key=False,
+        on_delete=models.CASCADE)
 
 
 class InfrastructureItem(models.Model):

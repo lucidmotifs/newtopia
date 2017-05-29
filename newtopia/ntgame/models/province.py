@@ -15,7 +15,6 @@ from ntgame.src.nt_exceptions import InvalidMapException
 from .kingdom import Kingdom
 from .military import Military
 from .race import Race
-from .infrastructure import Infrastructure
 
 
 class Province(models.Model):
@@ -71,13 +70,6 @@ class Province(models.Model):
 
     military = models.OneToOneField(Military,
         on_delete=models.CASCADE,
-        primary_key=False)
-
-    infrastructure = models.OneToOneField(Infrastructure,
-        on_delete=models.CASCADE,
-        null=False,
-        blank=True,
-        default=0,
         primary_key=False)
 
     kingdom = models.ForeignKey(Kingdom,

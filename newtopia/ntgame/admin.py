@@ -10,6 +10,10 @@ admin.site.register(Military)
 admin.site.register(Race)
 admin.site.register(Infrastructure)
 
+class InfrastructureInline(admin.StackedInline):
+    model = Infrastructure
+
+
 @admin.register(Province)
 class Province(admin.ModelAdmin):
     list_display = (
@@ -17,6 +21,17 @@ class Province(admin.ModelAdmin):
         'ruler',
         'kingdom',
     )
+
+    readonly_fields = ['owner_link']
+
+    def owner_link(self, obj):
+        change_url = urlresolvers.reverse('admin:auth_user_change',
+            args=(obj.user.id,))
+
+        return mark_safe('<a href="%s">%s</a>' % (change_url, obj.user.email))
+
+
+    owner_link.short_description = 'Account'
 
     fieldsets = (
         (None, {
@@ -34,6 +49,10 @@ class Province(admin.ModelAdmin):
             'fields': ('mages', 'runes', 'warhorses', 'prisoners',)
         }),
         ('Meta', {
-            'fields': ('race', 'military', 'kingdom', 'owner', 'infrastructure')
+            'fields': ('race', 'military', 'kingdom', owner_link, )
         }),
     )
+
+    inlines = [
+        InfrastructureInline,
+    ]
