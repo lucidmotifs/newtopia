@@ -11,4 +11,4 @@ class Kingdom(models.Model):
     number = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return "%s (%d:%d)" % ( self.name, self.island, self.number )

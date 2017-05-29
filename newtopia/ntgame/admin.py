@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Kingdom, Province, Military, Race
+from .models import Kingdom, Province, Military, Race, Infrastructure
 
 # Register your models here.
 
@@ -8,6 +8,7 @@ from .models import Kingdom, Province, Military, Race
 admin.site.register(Kingdom)
 admin.site.register(Military)
 admin.site.register(Race)
+admin.site.register(Infrastructure)
 
 @admin.register(Province)
 class Province(admin.ModelAdmin):
@@ -33,6 +34,6 @@ class Province(admin.ModelAdmin):
             'fields': ('mages', 'runes', 'warhorses', 'prisoners',)
         }),
         ('Meta', {
-            'fields': ('race', 'military', 'kingdom', 'owner',)
+            'fields': ('race', 'military', 'kingdom', 'owner', 'infrastructure')
         }),
     )
