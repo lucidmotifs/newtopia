@@ -2,7 +2,6 @@
 from django.db import models
 
 # ntgame models
-from .province import Province
 from .effect import Effect
 
 
@@ -38,7 +37,7 @@ class InfrastructureItem(models.Model):
         null=False,
         blank=False)
 
-    number = IntegerField()
+    number = models.IntegerField()
 
     infrastructure = models.ForeignKey(Infrastructure,
         on_delete=models.CASCADE,
