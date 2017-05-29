@@ -74,9 +74,10 @@ class Province(models.Model):
         primary_key=False)
 
     infrastructure = models.OneToOneField(Infrastructure,
-        on_delete=models.SET_NULL,
-        null=True,
+        on_delete=models.CASCADE,
+        null=False,
         blank=True,
+        default=0,
         primary_key=False)
 
     kingdom = models.ForeignKey(Kingdom,

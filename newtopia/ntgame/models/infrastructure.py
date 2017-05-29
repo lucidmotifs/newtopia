@@ -23,11 +23,11 @@ class Building(models.Model):
 
 class Infrastructure(models.Model):
 
-    land = models.IntegerField()
+    land = models.IntegerField(default=400)
 
-    explored = models.IntegerField()
+    explored = models.IntegerField(default=0)
 
-    built = models.IntegerField()
+    built = models.IntegerField(default=0)
 
 
 class InfrastructureItem(models.Model):

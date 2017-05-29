@@ -1,3 +1,2 @@
-* Create Province Model
-* Create Province view
-* Build Networth Formula (attach value to province properties)
+* Build Networth Formula (attach value to province properties) (PROG)
+* Display Relevant OneToOne (or foreignkey) models inline, rather than as seperate admin Objects.
