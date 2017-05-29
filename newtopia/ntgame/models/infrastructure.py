@@ -1,5 +1,6 @@
 # django modules
 from django.db import models
+from django.urls import reverse
 
 # ntgame models
 from .effect import Effect
@@ -31,7 +32,7 @@ class Infrastructure(models.Model):
     built = models.IntegerField(default=0)
 
     province = models.OneToOneField(Province,
-        null=True,
+        parent_link=True,
         primary_key=False,
         on_delete=models.CASCADE)
 

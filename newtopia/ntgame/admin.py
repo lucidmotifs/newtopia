@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
+from django.urls import reverse
 
 from .models import Kingdom, Province, Military, Race, Infrastructure
 
@@ -13,6 +15,26 @@ admin.site.register(Infrastructure)
 class InfrastructureInline(admin.StackedInline):
     model = Infrastructure
 
+    show_change_link = True
+    can_delete = False
+
+    readonly_fields = ('explored','built',)
+    verbose_name_plural = "Infrastructure"
+
+    fieldsets = (
+    (None, {
+        'fields': (
+            'land',
+        )
+    }),
+        ('Details', {
+            'fields': (
+                'built',
+                'explored',
+            )
+        }),
+    )
+
 
 @admin.register(Province)
 class Province(admin.ModelAdmin):
@@ -22,16 +44,7 @@ class Province(admin.ModelAdmin):
         'kingdom',
     )
 
-    readonly_fields = ['owner_link']
-
-    def owner_link(self, obj):
-        change_url = urlresolvers.reverse('admin:auth_user_change',
-            args=(obj.user.id,))
-
-        return mark_safe('<a href="%s">%s</a>' % (change_url, obj.user.email))
-
-
-    owner_link.short_description = 'Account'
+    readonly_fields = ('owner','trade_balance',)
 
     fieldsets = (
         (None, {
@@ -49,7 +62,7 @@ class Province(admin.ModelAdmin):
             'fields': ('mages', 'runes', 'warhorses', 'prisoners',)
         }),
         ('Meta', {
-            'fields': ('race', 'military', 'kingdom', owner_link, )
+            'fields': ('race', 'military', 'kingdom', 'owner', )
         }),
     )
 
