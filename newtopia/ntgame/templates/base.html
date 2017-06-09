@@ -16,6 +16,10 @@
 
 <body>
 
+  <header>
+    Header...
+  </header>
+
   <div class="container-fluid">
     <div class="row">
       {{ user }}
@@ -34,11 +38,27 @@
       </ul>
       {% endblock %}
       </div>
-      <div class="col-sm-10 ">
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 ">
       {% block content %}{% endblock %}
       </div>
     </div>
 
   </div>
+
+  <footer>
+      &copy; Paul Cooper
+      <script>
+          document.write(new Date().getFullYear());
+      </script>
+  </footer>
+
+  <!-- I should really update the version of this @TODO -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>');</script>
+  <script src="{% static 'ntgame/js/main.js' %}"></script>
+
 </body>
 </html>

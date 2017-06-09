@@ -36,6 +36,15 @@ class InfrastructureInline(admin.StackedInline):
     )
 
 
+class MilitaryInline(admin.StackedInline):
+    model = Military
+
+    show_change_link = True
+    can_delete = False
+
+    verbose_name_plural = "Military"
+
+
 @admin.register(Province)
 class Province(admin.ModelAdmin):
     list_display = (
@@ -62,10 +71,10 @@ class Province(admin.ModelAdmin):
             'fields': ('mages', 'runes', 'warhorses', 'prisoners',)
         }),
         ('Meta', {
-            'fields': ('race', 'military', 'kingdom', 'owner', )
+            'fields': ('race', 'kingdom', 'owner', )
         }),
     )
 
     inlines = [
-        InfrastructureInline,
+        InfrastructureInline, MilitaryInline
     ]

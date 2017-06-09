@@ -1,144 +1,95 @@
-{% load static %}
+{% extends "base.html" %}
+
 {% load humanize %}
 
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Throne Room (in development)</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block title %}
+<title>Throne Page</title>
+{% endblock %}
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+{% block content %}
+<h4>Province Details</h4>
 
-        <!-- Add bootstrap css files -->
-        <link rel="stylesheet" href="{% static 'ntgame/css/main.css' %}">
-        <link rel="stylesheet" href="{% static 'ntgame/css/normalize.css' %}">
+<table id="province_details">
 
-        <!-- JS library for compatibility -->
-        <script src="{% static 'ntgame/js/vendor/modernizr-2.6.2.min.js' %}"></script>
+  <thead>
+    <tr>
+      <th colspan="4">
+        {{ province.name }}
+        ({{ province.kingdom.island }}:{{ province.kingdom.island }})
+        <br />
+        {{ game.month }} {{ game.day }} of YR{{ game.year }}
+      </th>
+    </tr>
+  </thead>
 
-        <!-- Custom styles; targetted at this specific page -->
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser.
-            Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+  <tbody>
+    <tr>
+      <th>Networth</th>
+      <td>{{ province.networth|intcomma }}gc</td>
+      <th>NW Per Acre</th>
+      <td>{{ province.nwpa|floatformat:2 }}
+    </tr>
+    <tr>
+      <th>Race</th>
+      <td>{{ province.race.name }}</td>
+      <th>Soldiers</th>
+      <td>{{ province.military.soldiers|intcomma }}</td>
+    </tr>
+    <tr>
+      <th>Ruler</th>
+      <td>{{ province.ruler }}</td>
+      <th>{{ province.race.offense_spec_name }}</th>
+      <td>{{ province.military.offspec|intcomma }}</td>
+    </tr>
+    <tr>
+      <th>Land (Built %)</th>
+      <td>{{ province.land|intcomma }}</td>
+      <th>{{ province.race.defensive_spec_name }}</th>
+      <td>{{ province.military.defspec|intcomma }}</td>
+    </tr>
+    <tr>
+      <th>Peasants</th>
+      <td>{{ province.peasants|intcomma }}</td>
+      <th>{{ province.race.elite_name }}</th>
+      <td>{{ province.military.elites|intcomma }}</td>
+    </tr>
+    <tr>
+      <th>Building Efficiency</th>
+      <td>{{ province.land|intcomma }}</td>
+      <th>Thieves</th>
+      <td>{{ province.military.thieves|intcomma }}</td>
+    </tr>
+    <tr>
+      <th>Money</th>
+      <td>{{ province.money|intcomma }}</td>
+      <th>Mages</th>
+      <td>{{ province.military.defspec|intcomma }}</td>
+    </tr>
+    <tr>
+      <th>Food</th>
+      <td>{{ province.land|intcomma }}</td>
+      <th>War Horses</th>
+      <td>{{ province.warhorses|intcomma }}</td>
+    </tr>
+    <tr>
+      <th>Runes</th>
+      <td>{{ province.runes|intcomma }}</td>
+      <th>Prisoners</th>
+      <td>{{ province.prisoners|intcomma }}</td>
+    </tr>
+    <tr>
+      <th>Trade Balance</th>
+      <td>{{ province.trade_balance|intcomma }}gc</td>
+      <th>Generals Home</th>
+      <td>{{ province.military.generals_available|intcomma }}</td>
+    </tr>
+    <tr>
+      <th>Offense Points</th>
+      <td>{{ province.military.defense_points|intcomma }}</td>
+      <th>Defense Points</th>
+      <td>{{ province.military.defense_points|intcomma }}</td>
+    </tr>
+  </tody>
 
-        <header>
-            <div class="wrapper">
-               Header...
-            </div>
-        </header>
-
-        <main>
-
-          <div class="centre-viewport">
-
-            <h4>Province Details</h4>
-
-            <table id="province_details">
-
-              <thead>
-                <tr>
-                  <th colspan="4">
-                    {{ province.name }}
-                    ({{ province.kingdom.island }}:{{ province.kingdom.island }})
-                    <br />
-                    {{ game.month }} {{ game.day }} of YR{{ game.year }}
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <th>Networth</th>
-                  <td>{{ province.networth|intcomma }}gc</td>
-                  <th>NW Per Acre</th>
-                  <td>{{ province.nwpa|floatformat:2 }}
-                </tr>
-                <tr>
-                  <th>Race</th>
-                  <td>{{ province.race.name }}</td>
-                  <th>Soldiers</th>
-                  <td>{{ province.military.soldiers|intcomma }}</td>
-                </tr>
-                <tr>
-                  <th>Ruler</th>
-                  <td>{{ province.ruler }}</td>
-                  <th>{{ province.race.offense_spec_name }}</th>
-                  <td>{{ province.military.offspec|intcomma }}</td>
-                </tr>
-                <tr>
-                  <th>Land (Built %)</th>
-                  <td>{{ province.land|intcomma }}</td>
-                  <th>{{ province.race.defensive_spec_name }}</th>
-                  <td>{{ province.military.defspec|intcomma }}</td>
-                </tr>
-                <tr>
-                  <th>Peasants</th>
-                  <td>{{ province.peasants|intcomma }}</td>
-                  <th>{{ province.race.elite_name }}</th>
-                  <td>{{ province.military.elites|intcomma }}</td>
-                </tr>
-                <tr>
-                  <th>Building Efficiency</th>
-                  <td>{{ province.land|intcomma }}</td>
-                  <th>Thieves</th>
-                  <td>{{ province.military.thieves|intcomma }}</td>
-                </tr>
-                <tr>
-                  <th>Money</th>
-                  <td>{{ province.money|intcomma }}</td>
-                  <th>Mages</th>
-                  <td>{{ province.military.defspec|intcomma }}</td>
-                </tr>
-                <tr>
-                  <th>Food</th>
-                  <td>{{ province.land|intcomma }}</td>
-                  <th>War Horses</th>
-                  <td>{{ province.warhorses|intcomma }}</td>
-                </tr>
-                <tr>
-                  <th>Runes</th>
-                  <td>{{ province.runes|intcomma }}</td>
-                  <th>Prisoners</th>
-                  <td>{{ province.prisoners|intcomma }}</td>
-                </tr>
-                <tr>
-                  <th>Trade Balance</th>
-                  <td>{{ province.trade_balance|intcomma }}gc</td>
-                  <th>Generals Home</th>
-                  <td>{{ province.military.generals_available|intcomma }}</td>
-                </tr>
-                <tr>
-                  <th>Offense Points</th>
-                  <td>{{ province.military.defense_points|intcomma }}</td>
-                  <th>Defense Points</th>
-                  <td>{{ province.military.defense_points|intcomma }}</td>
-                </tr>
-              </tody>
-
-            </table>
-          </div>
-
-        </main>
-
-        <footer>
-            &copy; Paul Cooper
-            <script>
-                document.write(new Date().getFullYear());
-            </script>
-        </footer>
-
-        <!-- I should really update the version of this @TODO -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>');</script>
-        <script src="{% static 'ntgame/js/main.js' %}"></script>
-    </body>
-</html>
+</table>
+{% endblock %}

@@ -13,7 +13,6 @@ from ntgame.src.nt_exceptions import InvalidMapException
 
 # App imports
 from .kingdom import Kingdom
-from .military import Military
 from .race import Race
 
 
@@ -67,10 +66,6 @@ class Province(models.Model):
         on_delete=models.CASCADE,
         null=False,
         blank=False)
-
-    military = models.OneToOneField(Military,
-        on_delete=models.CASCADE,
-        primary_key=False)
 
     kingdom = models.ForeignKey(Kingdom,
         on_delete=models.CASCADE,
@@ -153,27 +148,27 @@ class Province(models.Model):
 
         return nw
 
-        ''' This property will set a property called nwpa (Networth Per Acre)
-        which will otherwise be 0. This avoids calculating networth twice.
-        This kind of makes because there's no point having a nwpa property
-        without networth - and networth should always be dynamic because it
-        should be the thing you notice if your province has been hit or opped. '''
-        @property
-        def networth(self):
+    ''' This property will set a property called nwpa (Networth Per Acre)
+    which will otherwise be 0. This avoids calculating networth twice.
+    This kind of makes because there's no point having a nwpa property
+    without networth - and networth should always be dynamic because it
+    should be the thing you notice if your province has been hit or opped. '''
+    @property
+    def networth(self):
 
-            self.MAP = \
-            dict((q.prop, q.value) for q in NetworthValue.objects.all())
+        self.MAP = \
+        dict((q.prop, q.value) for q in NetworthValue.objects.all())
 
-            networth = self.calc_networth(self.MAP)
+        networth = self.calc_networth(self.MAP)
 
-            self.nwpa = float(networth / self.land)
+        self.nwpa = float(networth / self.land)
 
-            return networth
+        return networth
 
 
-        def __str__(self):
-            return "%s of %s (%d:%d)" % \
-                ( self.name,
-                  self.kingdom.name,
-                  self.kingdom.island,
-                  self.kingdom.number )
+    def __str__(self):
+        return "%s of %s (%d:%d)" % \
+            ( self.name,
+              self.kingdom.name,
+              self.kingdom.island,
+              self.kingdom.number )

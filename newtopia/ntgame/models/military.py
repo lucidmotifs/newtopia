@@ -4,6 +4,8 @@ import inspect
 # django modules
 from django.db import models
 
+from .province import Province
+
 
 class Military(models.Model):
 
@@ -12,6 +14,11 @@ class Military(models.Model):
     defspec = models.IntegerField(default=0)
     elites = models.IntegerField(default=0)
     thieves = models.IntegerField(default=0)
+
+    province = models.OneToOneField(Province,
+        null = True,
+        on_delete=models.CASCADE,
+        primary_key=False)
 
     @property
     def total_off_points(self, race):
@@ -25,7 +32,7 @@ class Military(models.Model):
                 (self.offspec * self.province.race.offense_spec_value) + \
                 (self.elites * self.province.race.elite_offense) + \
                 (self.province.war_horses )
-                
+
 
     @property
     def total_def_points(self, race):
