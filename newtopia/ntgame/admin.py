@@ -2,7 +2,9 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.urls import reverse
 
-from .models import Kingdom, Province, Military, Race, Infrastructure
+from .models import Kingdom, Province, Military, Race
+from .models import Infrastructure, InfrastructureItem, Building
+from .models import Effect
 
 # Register your models here.
 
@@ -11,6 +13,8 @@ admin.site.register(Kingdom)
 admin.site.register(Military)
 admin.site.register(Race)
 admin.site.register(Infrastructure)
+admin.site.register(Building)
+admin.site.register(Effect)
 
 class InfrastructureInline(admin.StackedInline):
     model = Infrastructure

@@ -8,6 +8,8 @@ from .province import Province
 
 
 class Building(models.Model):
+    """ Object that applies it's linked effect to a province based on the
+    percentage built within an infrastructure """
 
     name = models.CharField(max_length=40)
 
@@ -15,6 +17,9 @@ class Building(models.Model):
 
     magnitude = models.IntegerField()
 
+    """ The rate at which the effectiveness of the building diminishes. The
+    higher this number the less effective building higher quantities of
+    the building would be. """
     diminishing_ratio = models.FloatField()
 
     effect = models.ForeignKey(Effect,
@@ -24,6 +29,7 @@ class Building(models.Model):
 
 
 class Infrastructure(models.Model):
+    """ Stores the basic data for a Province's infrastructure """
 
     land = models.IntegerField(default=400)
 
@@ -38,6 +44,7 @@ class Infrastructure(models.Model):
 
 
 class InfrastructureItem(models.Model):
+    """ Links a building to an infrastructure with a given amount """
 
     building = models.ForeignKey(Building,
         on_delete=models.CASCADE,
