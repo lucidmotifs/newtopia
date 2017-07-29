@@ -13,7 +13,7 @@ class Building(models.Model):
 
     name = models.CharField(max_length=40)
 
-    description = models.CharField(max_length=40)
+    description = models.CharField(max_length=200)
 
     magnitude = models.IntegerField()
 
@@ -22,10 +22,10 @@ class Building(models.Model):
     the building would be. """
     diminishing_ratio = models.FloatField()
 
-    effect = models.ForeignKey(Effect,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True)
+    effect = models.ManyToManyField(Effect)
+
+    def __str__(self):
+        return self.name
 
 
 class Infrastructure(models.Model):

@@ -126,7 +126,7 @@ else:
             'NAME': 'newtopia',
             'USER': 'newtopiadb',
             'PASSWORD': 'specialphrase42',
-            'HOST': '192.168.0.42',
+            'HOST': '192.168.1.42',
             'PORT': '5432',
         }
     }

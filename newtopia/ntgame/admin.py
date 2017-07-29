@@ -14,7 +14,6 @@ admin.site.register(Military)
 admin.site.register(Race)
 admin.site.register(Infrastructure)
 admin.site.register(Building)
-admin.site.register(Effect)
 
 class InfrastructureInline(admin.StackedInline):
     model = Infrastructure
@@ -48,6 +47,12 @@ class MilitaryInline(admin.StackedInline):
 
     verbose_name_plural = "Military"
 
+@admin.register(Effect)
+class Effect(admin.ModelAdmin):
+    list_display = (
+        'tag',
+        'name',
+    )
 
 @admin.register(Province)
 class Province(admin.ModelAdmin):
