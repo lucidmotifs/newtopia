@@ -4,7 +4,8 @@ from django.urls import reverse
 
 from .models import Kingdom, Province, Military, Race
 from .models import Infrastructure, InfrastructureItem, Building
-from .models import Effect, EffectInstance, BuildingEffectInstance
+from .models import Effect, EffectInstance
+from .models import Spell
 
 # Register your models here.
 
@@ -14,8 +15,7 @@ admin.site.register(Military)
 admin.site.register(Race)
 admin.site.register(Infrastructure)
 admin.site.register(Building)
-admin.site.register(BuildingEffectInstance)
-admin.site.register(EffectInstance)
+admin.site.register(Spell)
 
 class InfrastructureInline(admin.StackedInline):
     model = Infrastructure
@@ -55,6 +55,16 @@ class Effect(admin.ModelAdmin):
         'tag',
         'name',
     )
+
+
+@admin.register(EffectInstance)
+class EffectInstance(admin.ModelAdmin):
+    def get_model_perms(self, request):
+        """
+        Return empty perms dict thus hiding the model from admin index.
+        """
+        return {}
+        
 
 @admin.register(Province)
 class Province(admin.ModelAdmin):

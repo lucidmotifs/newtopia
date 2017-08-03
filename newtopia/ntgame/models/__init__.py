@@ -7,5 +7,5 @@ from .infrastructure import Infrastructure
 from .infrastructure import InfrastructureItem
 from .effect import Effect
 from .effect import EffectInstance
-from .effect import BuildingEffectInstance
 from .effect import EffectApplication
+from .magic import Spell

@@ -30,27 +30,12 @@ class EffectInstance(models.Model):
         null=False,
         blank=False)
 
-    """ Impact per building percentage. """
-    magnitude = models.FloatField()
+    """ Size of the effect. """
+    magnitude = models.FloatField(default=0.0)
 
 
-class BuildingEffectInstance(models.Model):
-    """ An instance of an effect that can be applied to a building or spell. """
-
-    """ The related effect """
-    effect = models.ForeignKey(Effect,
-        on_delete=models.CASCADE,
-        null=False,
-        blank=False)
-
-    """ The building the effect is related to. """
-    building = models.ForeignKey(Building,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True)
-
-    """ Impact per building percentage. """
-    magnitude = models.FloatField()
+    def __str__(self):
+        return "{} with mag. {}".format(self.effect.name, self.magnitude)
 
 
 class EffectApplication(models.Model):
