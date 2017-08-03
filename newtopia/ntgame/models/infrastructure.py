@@ -10,18 +10,18 @@ class Building(models.Model):
     """ Object that applies it's linked effect to a province based on the
     percentage built within an infrastructure """
 
-    name = models.CharField(max_length=40)
+    """ Unique name of building """
+    name = models.CharField(max_length=40, unique=True)
 
+    """ A human readable description of what the building does """
     description = models.CharField(max_length=200)
 
     """ The rate at which the effectiveness of the building diminishes. The
     higher this number the less effective building higher quantities of
     the building would be. """
-    diminishing_ratio = models.FloatField()
+    diminishing_return = models.FloatField()
 
-    """
-    effect_instance = models.ManyToManyField(Effect, through='EffectInstance')
-    """
+    effect_instance = models.ManyToManyField('EffectInstance')
 
     def __str__(self):
         return self.name

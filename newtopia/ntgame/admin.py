@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from .models import Kingdom, Province, Military, Race
 from .models import Infrastructure, InfrastructureItem, Building
-from .models import Effect
+from .models import Effect, EffectInstance, BuildingEffectInstance
 
 # Register your models here.
 
@@ -14,7 +14,8 @@ admin.site.register(Military)
 admin.site.register(Race)
 admin.site.register(Infrastructure)
 admin.site.register(Building)
-#admin.site.register(EffectInstance)
+admin.site.register(BuildingEffectInstance)
+admin.site.register(EffectInstance)
 
 class InfrastructureInline(admin.StackedInline):
     model = Infrastructure

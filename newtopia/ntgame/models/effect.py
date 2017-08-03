@@ -23,28 +23,42 @@ class Effect(models.Model):
 
 class EffectInstance(models.Model):
     """ An instance of an effect that can be applied to a building or spell. """
+
+    """ The related effect """
     effect = models.ForeignKey(Effect,
         on_delete=models.CASCADE,
         null=False,
         blank=False)
 
+    """ Impact per building percentage. """
+    magnitude = models.FloatField()
+
+
+class BuildingEffectInstance(models.Model):
+    """ An instance of an effect that can be applied to a building or spell. """
+
+    """ The related effect """
+    effect = models.ForeignKey(Effect,
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False)
+
+    """ The building the effect is related to. """
     building = models.ForeignKey(Building,
         on_delete=models.CASCADE,
         null=True,
         blank=True)
 
-    # and others that require an effect instance?
-
-
-    magnitude = models.FloatField(default=0)
+    """ Impact per building percentage. """
+    magnitude = models.FloatField()
 
 
 class EffectApplication(models.Model):
     """ Used to apply effects to provinces """
     instance = models.ForeignKey(EffectInstance,
         on_delete=models.CASCADE,
-        null=False,
-        blank=False)
+        null=True,
+        blank=True)
 
     province = models.ForeignKey(Province,
         on_delete=models.CASCADE,
