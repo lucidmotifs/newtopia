@@ -14,6 +14,7 @@ admin.site.register(Military)
 admin.site.register(Race)
 admin.site.register(Infrastructure)
 admin.site.register(Building)
+#admin.site.register(EffectInstance)
 
 class InfrastructureInline(admin.StackedInline):
     model = Infrastructure

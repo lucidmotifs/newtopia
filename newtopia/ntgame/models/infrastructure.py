@@ -3,7 +3,6 @@ from django.db import models
 from django.urls import reverse
 
 # ntgame models
-from .effect import Effect
 from .province import Province
 
 
@@ -15,14 +14,14 @@ class Building(models.Model):
 
     description = models.CharField(max_length=200)
 
-    magnitude = models.IntegerField()
-
     """ The rate at which the effectiveness of the building diminishes. The
     higher this number the less effective building higher quantities of
     the building would be. """
     diminishing_ratio = models.FloatField()
 
-    effect = models.ManyToManyField(Effect)
+    """
+    effect_instance = models.ManyToManyField(Effect, through='EffectInstance')
+    """
 
     def __str__(self):
         return self.name

@@ -1,6 +1,9 @@
 # django modules
 from django.db import models
 
+from .province import Province
+from .infrastructure import Building
+
 
 class Effect(models.Model):
     """ The core component of province change """
@@ -12,7 +15,43 @@ class Effect(models.Model):
     """ Code used to identify the effect, like a key. """
     tag = models.CharField(max_length=40,unique=True)
 
-    """ Type of effect; alters when the effect is applied. """
+    # others to be implemented
+
+    def __str__(self):
+        return self.name
+
+
+class EffectInstance(models.Model):
+    """ An instance of an effect that can be applied to a building or spell. """
+    effect = models.ForeignKey(Effect,
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False)
+
+    building = models.ForeignKey(Building,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True)
+
+    # and others that require an effect instance?
+
+
+    magnitude = models.FloatField(default=0)
+
+
+class EffectApplication(models.Model):
+    """ Used to apply effects to provinces """
+    instance = models.ForeignKey(EffectInstance,
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False)
+
+    province = models.ForeignKey(Province,
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False)
+
+    """ Type of effect; alters how the effect is applied. """
     EFFECT_TYPE_CHOICES = (
         (1, 'immediate'),
         (2, 'each_round'),
@@ -22,19 +61,7 @@ class Effect(models.Model):
     )
     etype = models.IntegerField(choices=EFFECT_TYPE_CHOICES, default=1)
 
-    # others to be implemented
-    '''
-    expires_at (ntdate)
-    applies_at (ntate)
-    '''
-
-    def __str__(self):
-        return self.name
-
-
-class EffectInstance(models.Model):
-    """ An instance of an effect that can be applied to a building or spell. """
-    effect = ForeignKey(Effect,
-        on_delete=models.CASCADE,
-        null=False,
-        blank=False)
+    # Round the effect was applied
+    applied_on = models.IntegerField()
+    # Round the effect expires (NULL permanent)
+    expires_at = models.IntegerField()
