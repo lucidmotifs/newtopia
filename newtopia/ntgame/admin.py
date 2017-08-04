@@ -14,8 +14,9 @@ admin.site.register(Kingdom)
 admin.site.register(Military)
 admin.site.register(Race)
 admin.site.register(Infrastructure)
-admin.site.register(Building)
 admin.site.register(Spell)
+
+
 
 class InfrastructureInline(admin.StackedInline):
     model = Infrastructure
@@ -49,6 +50,16 @@ class MilitaryInline(admin.StackedInline):
 
     verbose_name_plural = "Military"
 
+
+@admin.register(Building)
+class Building(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'description',
+        'effect_instances',
+    )
+
+
 @admin.register(Effect)
 class Effect(admin.ModelAdmin):
     list_display = (
@@ -64,7 +75,7 @@ class EffectInstance(admin.ModelAdmin):
         Return empty perms dict thus hiding the model from admin index.
         """
         return {}
-        
+
 
 @admin.register(Province)
 class Province(admin.ModelAdmin):

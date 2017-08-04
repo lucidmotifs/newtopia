@@ -23,6 +23,10 @@ class Building(models.Model):
 
     effect_instance = models.ManyToManyField('EffectInstance')
 
+    def effect_instances(self):
+        """ Return a string of EffectInstances attached to this Object """
+        return ", ".join([e.effect.name for e in self.effect_instance.all()])
+
     def __str__(self):
         return self.name
 

@@ -10,7 +10,7 @@ class Effect(models.Model):
 
     """ e.g. Peasant Growth - would signify that applying this effect,
     with a given magnitude would impact how fast peasants grow per turn."""
-    name = models.CharField(max_length=40,unique=True)
+    name = models.CharField(max_length=40,unique=False)
 
     """ Code used to identify the effect, like a key. """
     tag = models.CharField(max_length=40,unique=True)

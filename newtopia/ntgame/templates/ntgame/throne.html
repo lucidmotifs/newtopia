@@ -7,89 +7,92 @@
 {% endblock %}
 
 {% block content %}
-<h4>Province Details</h4>
+<h3 class="uk-heading-primary uk-heading-line"><span>Throne Room</span></h3>
 
-<table id="province_details">
-
+<table id="province_details" class="uk-table uk-text-right uk-table-small uk-table-striped uk-table-divider">
+   <caption>
+      Viewing: {{ province.name }} of {{ province.kingdom.name }}
+       ({{ province.kingdom.island }}:{{ province.kingdom.island }})
+      <br />
+      Today is {{ game.month }} {{ game.day }} of YR{{ game.year }}
+   </caption>
   <thead>
     <tr>
-      <th colspan="4">
-        {{ province.name }}
-        ({{ province.kingdom.island }}:{{ province.kingdom.island }})
-        <br />
-        {{ game.month }} {{ game.day }} of YR{{ game.year }}
-      </th>
+      <th class="uk-table-shrink">1</th>
+      <th class="uk-table-expand">2</th>
+      <th class="uk-table-shrink">3</th>
+      <th class="uk-table-expand">4</th>
     </tr>
   </thead>
 
   <tbody>
     <tr>
-      <th>Networth</th>
-      <td>{{ province.networth|intcomma }}gc</td>
-      <th>NW Per Acre</th>
-      <td>{{ province.nwpa|floatformat:2 }}
+      <td class="uk-text-muted uk-text-left">Networth</td>
+      <td >{{ province.networth|intcomma }}gc</td>
+      <td class="uk-text-muted uk-text-left">NW Per Acre</td>
+      <td >{{ province.nwpa|floatformat:2 }}</td>
     </tr>
     <tr>
-      <th>Race</th>
+      <td class="uk-text-muted uk-text-left">Race</td>
       <td>{{ province.race.name }}</td>
-      <th>Soldiers</th>
+      <td class="uk-text-muted uk-text-left">Soldiers</td>
       <td>{{ province.military.soldiers|intcomma }}</td>
     </tr>
     <tr>
-      <th>Ruler</th>
+      <td class="uk-text-muted uk-text-left">Ruler</td>
       <td>{{ province.ruler }}</td>
-      <th>{{ province.race.offense_spec_name }}</th>
+      <td class="uk-text-muted uk-text-left">{{ province.race.offense_spec_name }}</td>
       <td>{{ province.military.offspec|intcomma }}</td>
     </tr>
     <tr>
-      <th>Land (Built %)</th>
+      <td class="uk-text-muted uk-text-left">Land (Built %)</td>
       <td>{{ province.land|intcomma }}</td>
-      <th>{{ province.race.defensive_spec_name }}</th>
+      <td class="uk-text-muted uk-text-left">{{ province.race.defensive_spec_name }}</td>
       <td>{{ province.military.defspec|intcomma }}</td>
     </tr>
     <tr>
-      <th>Peasants</th>
+      <td class="uk-text-muted uk-text-left">Peasants</td>
       <td>{{ province.peasants|intcomma }}</td>
-      <th>{{ province.race.elite_name }}</th>
+      <td class="uk-text-muted uk-text-left">{{ province.race.elite_name }}</td>
       <td>{{ province.military.elites|intcomma }}</td>
     </tr>
     <tr>
-      <th>Building Efficiency</th>
+      <td class="uk-text-muted uk-text-left">Building Efficiency</td>
       <td>{{ province.land|intcomma }}</td>
-      <th>Thieves</th>
+      <td class="uk-text-muted uk-text-left">Thieves</td>
       <td>{{ province.military.thieves|intcomma }}</td>
     </tr>
     <tr>
-      <th>Money</th>
+      <td class="uk-text-muted uk-text-left">Money</td>
       <td>{{ province.money|intcomma }}</td>
-      <th>Mages</th>
+      <td class="uk-text-muted uk-text-left">Mages</td>
       <td>{{ province.military.defspec|intcomma }}</td>
     </tr>
     <tr>
-      <th>Food</th>
+      <td class="uk-text-muted uk-text-left">Food</td>
       <td>{{ province.land|intcomma }}</td>
-      <th>War Horses</th>
+      <td class="uk-text-muted uk-text-left">War Horses</td>
       <td>{{ province.warhorses|intcomma }}</td>
     </tr>
     <tr>
-      <th>Runes</th>
+      <td class="uk-text-muted uk-text-left">Runes</td>
       <td>{{ province.runes|intcomma }}</td>
-      <th>Prisoners</th>
+      <td class="uk-text-muted uk-text-left">Prisoners</td>
       <td>{{ province.prisoners|intcomma }}</td>
     </tr>
     <tr>
-      <th>Trade Balance</th>
+      <td class="uk-text-muted uk-text-left">Trade Balance</td>
       <td>{{ province.trade_balance|intcomma }}gc</td>
-      <th>Generals Home</th>
+      <td class="uk-text-muted uk-text-left">Generals Home</td>
       <td>{{ province.military.generals_available|intcomma }}</td>
     </tr>
     <tr>
-      <th>Offense Points</th>
+      <td class="uk-text-muted uk-text-left">Offense Points</td>
       <td>{{ province.military.defense_points|intcomma }}</td>
-      <th>Defense Points</th>
+      <td class="uk-text-muted uk-text-left">Defense Points</td>
       <td>{{ province.military.defense_points|intcomma }}</td>
     </tr>
-  </tody>
+</tbody>
 
 </table>
 {% endblock %}
