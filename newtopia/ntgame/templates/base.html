@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   {% block title %}<title>Local Library</title>{% endblock %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -62,7 +61,7 @@
             class="uk-button uk-button-secondary uk-margin-small-right"
             uk-toggle>
                <span uk-icon="icon: menu"></span>
-               Menu
+               Menu {{ this_page }}
          </a>
 
          <div class="uk-card uk-card-body uk-dark">
@@ -82,23 +81,7 @@
    </footer>
 
 <!-- offcanvas content -->
-<div id="offcanvas-slide" uk-offcanvas>
-   <div class="uk-offcanvas-bar">
-
-      <ul class="uk-nav uk-nav-default">
-         <li class="uk-active"><a href="#">Active</a></li>
-         {% block active %}
-         <li><a href="{% url 'index' %}">Home</a></li>
-         {% endblock %}
-         <li class="uk-nav-header">Header</li>
-         <li><a href="{% url 'index' %}">Home</a></li>
-         <li><a href="#">Item</a></li>
-         <li class="uk-nav-divider"></li>
-         <li><a href="#">Item</a></li>
-      </ul>
-
-   </div>
-</div>
+{% include "navigation.html" with active_page=this_page %}
 
 </body>
 </html>

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load humanize %}
+
+{% block title %}
+<title>Throne Page</title>
+{% endblock %}
+
+{% block active %}
+<li><a href="{% url 'build' %}">Build</a></li>
+{% endblock %}
+
+{% block content %}
+<h3 class="uk-heading-primary uk-heading-line"><span>Building</span></h3>
+
+<form action="/game/build" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field }}
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+    </div>
+{% endfor %}
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}
