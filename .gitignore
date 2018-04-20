@@ -20,7 +20,6 @@ lib64/
 parts/
 sdist/
 var/
-.venv/
 *.egg-info/
 .installed.cfg
 *.egg
@@ -81,6 +80,7 @@ celerybeat-schedule
 
 # virtualenv
 venv/
+.venv/
 ENV/
 
 # Spyder project settings
@@ -99,3 +99,6 @@ kaleb
 kaleb
 
 kaleb.pub
+
+# Visual Studio Code
+.vscode/
