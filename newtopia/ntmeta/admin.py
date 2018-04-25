@@ -1,15 +1,20 @@
 from django.contrib import admin
 
-from .models import Rule, NetworthValue
+from .models import EntityGroup, Entity, Aspect
 
 # Register your models here.
 
 # Meta Objects
-@admin.register(Rule)
+@admin.register(EntityGroup)
 class RuleAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(NetworthValue)
+@admin.register(Entity)
 class NetworthValue(admin.ModelAdmin):
-    list_display = ('prop', 'value')
+    pass
+
+
+@admin.register(Aspect)
+class NetworthValue(admin.ModelAdmin):
+    pass

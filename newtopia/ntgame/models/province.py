@@ -3,8 +3,6 @@ import inspect
 
 # django modules
 from django.db import models
-from ntmeta.models import NetworthValue
-from django.contrib.auth.models import User
 
 # Custom imports
 from ntgame.src import nt_rules
@@ -73,7 +71,7 @@ class Province(models.Model):
         null=False,
         blank=False)
 
-    owner = models.ForeignKey(User,
+    owner = models.ForeignKey('auth.User',
         on_delete=models.CASCADE,
         default=1,
         null=False,
@@ -155,15 +153,7 @@ class Province(models.Model):
     should be the thing you notice if your province has been hit or opped. '''
     @property
     def networth(self):
-
-        self.MAP = \
-        dict((q.prop, q.value) for q in NetworthValue.objects.all())
-
-        networth = self.calc_networth(self.MAP)
-
-        self.nwpa = float(networth / self.land)
-
-        return networth
+        return 0
 
 
     def __str__(self):

@@ -1,6 +1,5 @@
 # django modules
 from django.db import models
-from django.urls import reverse
 
 # ntgame models
 from .province import Province
@@ -21,7 +20,7 @@ class Building(models.Model):
     the building would be. """
     diminishing_return = models.FloatField()
 
-    effect_instance = models.ManyToManyField('EffectInstance')
+    effect_instance = models.ManyToManyField('Instance')
 
     def effect_instances(self):
         """ Return a string of EffectInstances attached to this Object """

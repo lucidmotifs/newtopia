@@ -25,7 +25,7 @@ class Spell(models.Model):
         validators = [MinValueValidator(0.0), MaxValueValidator(1.0)]
     )
 
-    effect_instance = models.ManyToManyField('EffectInstance')
+    effect_instance = models.ManyToManyField('Instance')
 
     def __str__(self):
         return self.name

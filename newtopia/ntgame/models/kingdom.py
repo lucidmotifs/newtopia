@@ -1,6 +1,3 @@
-# system modules
-import inspect
-
 # django modules
 from django.db import models
 

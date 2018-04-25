@@ -70,8 +70,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'storages',
+    'ntmeta',
     'ntgame',
-    'ntmeta'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -105,7 +105,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'newtopia.wsgi.application'
 
-
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 if 'RDS_DB_NAME' in os.environ:
@@ -121,13 +121,17 @@ if 'RDS_DB_NAME' in os.environ:
     }
 else:
     DATABASES = {
-        'default': {
+        'postgres': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'newtopia',
             'USER': 'newtopiadb',
             'PASSWORD': 'specialphrase42',
             'HOST': '192.168.1.42',
             'PORT': '5432',
+        },
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(PROJECT_DIR, 'newtopia.db'),
         }
     }
 

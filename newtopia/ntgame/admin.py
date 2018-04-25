@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from .models import Kingdom, Province, Military, Race
 from .models import Infrastructure, InfrastructureItem, Building
-from .models import Effect, EffectInstance
+from .models import Effect, Instance
 from .models import Spell
 
 # Register your models here.
@@ -15,7 +15,6 @@ admin.site.register(Military)
 admin.site.register(Race)
 admin.site.register(Infrastructure)
 admin.site.register(Spell)
-
 
 
 class InfrastructureInline(admin.StackedInline):
@@ -68,7 +67,7 @@ class Effect(admin.ModelAdmin):
     )
 
 
-@admin.register(EffectInstance)
+@admin.register(Instance)
 class EffectInstance(admin.ModelAdmin):
     def get_model_perms(self, request):
         """

@@ -8,6 +8,9 @@ from django.db import models
 from .province import Province
 from .infrastructure import Building
 
+# meta
+from ntmeta.models import Entity
+
 
 class Effect(models.Model):
     """ The core component of province change """
@@ -17,7 +20,7 @@ class Effect(models.Model):
     name = models.CharField(max_length=40, unique=False)
 
     """ The entity that generated the effect """
-    entity = models.ForeignKey('ntmeta.Entity',
+    entity = models.ForeignKey(Entity,
         on_delete=models.CASCADE,
         null=False,
         blank=False)
@@ -28,13 +31,12 @@ class Effect(models.Model):
     def __str__(self):
         return self.name
 
-
 class Instance(models.Model):
     """ An instance of an effect that can be applied to a building or spell. """
 
     class EffectType(Enum):
         DELAYED = 1
-        IMMEDIATE = 2     
+        IMMEDIATE = 2
         OVER_TIME = 3
         NEXT_TURN = 4
 
@@ -46,7 +48,8 @@ class Instance(models.Model):
 
     """ Determines the type of application produced """
     effect_type = models.IntegerField(
-        choices=[e.value for e in EffectType], default=EffectType.IMMEDIATE)
+        choices=EffectType.__members__.items(),
+        default=EffectType.IMMEDIATE)
 
     """ How long effect persists. Ignore when `effect_type` is immediate and
         determines when the delayed effect pops when `effect_type` is
@@ -64,7 +67,7 @@ class Instance(models.Model):
 
     """ When True, magnitude works as usual, and base_value is only applied if
         the resulting Application value would be less than the base_value """
-    base_is_min = models.BooleanField(defaul=False)
+    base_is_min = models.BooleanField(default=False)
 
     """ Denotes negative or positive version of effect """
     is_negative = models.BooleanField(default=False)
@@ -79,6 +82,9 @@ class Instance(models.Model):
         return "{} with mag. {}".format(self.effect.name, self.magnitude)
 
 
+EffectType = Instance.EffectType
+
+
 class Application(models.Model):
     """ Used to apply effects to provinces """
     instance = models.ForeignKey(Instance,
@@ -86,15 +92,13 @@ class Application(models.Model):
         null=True,
         blank=True)
 
-    province = models.ForeignKey(Province,
-        on_delete=models.CASCADE,
-        null=False,
-        blank=False)
+    applied_to = models.ForeignKey(
+        Province, on_delete=models.CASCADE, null=False, blank=False,
+        related_name='to')
 
-    applied_by = models.ForeignKey(Province,
-        on_delete=models.CASCADE,
-        null=False,
-        blank=False)
+    applied_by = models.ForeignKey(
+        Province, on_delete=models.CASCADE, null=False, blank=False,
+        related_name='by')
 
     """ Type of effect; alters how the effect is applied. """
     # Round the effect was applied (ntdate)
